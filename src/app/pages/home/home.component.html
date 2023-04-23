@@ -1,0 +1,50 @@
+<!-- -->
+
+<div class="flex-container">
+  <div class="flex-item flex-item-calendar">
+    <mat-slide-toggle>Toggle me!</mat-slide-toggle>
+    <mat-card class="flex-item-calendar__card">
+      <mat-calendar [(selected)]="selected"></mat-calendar>
+    </mat-card>
+    <p>Selected date: {{ selected }}</p>
+  </div>
+  <div class="flex-item flex-item__transaction">
+    <ng-container
+      *ngIf="transactionDetails$ | async as transactionDetails; else loader"
+    >
+      <mat-accordion
+        *ngFor="let days of transactionDetails.days"
+        class="bk-web-accordion"
+        multi
+      >
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ days.id }}</mat-panel-title>
+            <mat-panel-description>
+              {{ days.transactions.length }} transactions found
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let item of days.transactions">
+            <mat-card *ngIf="item.otherParty">
+              <mat-card-header>
+                <mat-card-title>
+                  {{ item.otherParty.name }}
+                </mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-container>
+    <ng-template #loader="">
+      <mat-card *ngFor="let i of [1, 2, 3]" class="bw-web-skeleton">
+        <ngx-skeleton-loader
+          class="bw-web-skeleton-loader"
+          count="1"
+          appearance="line"
+          animation="pulse"
+        ></ngx-skeleton-loader>
+      </mat-card>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+
+  .flex-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    height: 100%;
+    width: 100%;
+
+    .flex-item {
+      display: flex;
+      justify-content: center;
+      flex-flow: column wrap;
+      align-items: center;
+      width: 50%;
+
+      &__transaction {
+        .bw-web-skeleton {
+          width: 100%;
+          margin: 20px 0px;
+          padding: 16px;
+          &-loader {
+            display: block;
+            width: 100%;
+          }
+        }
+
+        .bk-web-accordion {
+          width: 100%;
+          margin: 10px 0px;
+
+          mat-card-title {
+            font-size: 16px;
+          }
+          .mat-mdc-card-header {
+            margin: 16px;
+            padding: 0;
+          }
+        }
+      }
+    }
+
+    .flex-item-calendar {
+      &__card {
+        width: 300px;
+      }
+    }
+  }
+}

@@ -1,17 +1,5 @@
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
-<ngx-skeleton-loader count="1" appearance="circle"></ngx-skeleton-loader>
-<ngx-skeleton-loader
-  count="2"
-  appearance="line"
-  animation="pulse"
-></ngx-skeleton-loader>
-
-<div class="flex-container">
-  <div class="flex-item flex-item__calendar">
-    <mat-card class="demo-inline-calendar-card">
-      <mat-calendar [(selected)]="selected"></mat-calendar>
-    </mat-card>
-    <p>Selected date: {{ selected }}</p>
-  </div>
-  <div class="flex-item flex-item__transaction"></div>
+<div class="bank-webapp">
+  <section class="container">
+    <router-outlet #routerOutlet="outlet"></router-outlet>
+  </section>
 </div>
