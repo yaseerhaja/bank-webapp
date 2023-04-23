@@ -14,3 +14,16 @@ mat-card-content {
   justify-content: space-around;
   margin: 16px;
 }
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 640px) {
+  .bk-web-breadcrumb {
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  mat-card-content {
+    margin: 12px;
+    flex-flow: column wrap;
+  }
+}

@@ -13,9 +13,12 @@
     .flex-item {
       display: flex;
       justify-content: center;
-      flex-flow: column wrap;
+      flex-flow: column nowrap;
       align-items: center;
       width: 50%;
+      height: 800px;
+      max-height: 800px;
+      overflow: auto;
 
       &__transaction {
         .bw-web-skeleton {
@@ -30,7 +33,7 @@
 
         .bk-web-accordion {
           width: 100%;
-          margin: 10px 0px;
+          margin: 4px 0px;
 
           mat-card-title {
             font-size: 16px;
@@ -73,7 +76,77 @@
 
     .flex-item-calendar {
       &__card {
-        width: 300px;
+        width: 500px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  :host {
+    .flex-container {
+      .flex-item {
+        height: 700px;
+        max-height: 700px;
+        overflow: auto;
+        &__transaction {
+          margin-top: 24px;
+          .bk-web-accordion {
+            .mat-mdc-card-header {
+              margin: 0 4px;
+            }
+            mat-card-title {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      .flex-item-calendar {
+        &__card {
+          width: 260px;
+        }
+      }
+
+      mat-slide-toggle {
+        label {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    .flex-container {
+      flex-flow: column wrap;
+      .flex-item {
+        width: 100%;
+        height: auto;
+        max-height: initial;
+        overflow: initial;
+        &__transaction {
+          margin-top: 24px;
+          .bk-web-accordion {
+            .mat-mdc-card-header {
+              margin: 0 4px;
+            }
+            mat-card-title {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      .flex-item-calendar {
+        &__card {
+          width: 100%;
+        }
+      }
+
+      mat-slide-toggle {
+        label {
+          color: #fff;
+        }
       }
     }
   }

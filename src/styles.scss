@@ -174,3 +174,47 @@ table {
     color: #fff;
   }
 }
+
+mat-slide-toggle {
+  margin: 20px;
+
+  label {
+    color: #fff;
+  }
+}
+
+@media (max-width: 1280px) {
+  .bank-webapp {
+    .flex-container {
+      .flex-item.flex-item-calendar {
+        align-items: end;
+      }
+    }
+
+    mat-slide-toggle {
+      margin: 20px;
+
+      label {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .bank-webapp {
+    .flex-container {
+      .flex-item.flex-item-calendar {
+        align-items: end;
+      }
+    }
+
+    mat-slide-toggle {
+      margin: 20px;
+
+      label {
+        color: #fff;
+      }
+    }
+  }
+}
