@@ -1,0 +1,16 @@
+.bk-web-breadcrumb {
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: space-around;
+  margin: 16px;
+}

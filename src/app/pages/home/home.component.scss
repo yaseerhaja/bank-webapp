@@ -34,10 +34,38 @@
 
           mat-card-title {
             font-size: 16px;
+            margin: 8px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            text-align: center;
+            align-items: center;
+
+            .mat-mdc-standard-chip.credited-chip {
+              background-color: #03ad03;
+            }
+
+            .mat-mdc-standard-chip {
+              background-color: #ff0000;
+            }
+
+            div {
+              width: 33.3%;
+              text-align: left;
+            }
           }
           .mat-mdc-card-header {
-            margin: 16px;
+            margin: 0 16px;
             padding: 0;
+          }
+
+          .bk-web-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 8px;
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
       }

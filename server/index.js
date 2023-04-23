@@ -5,6 +5,10 @@ const app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const transactions = require('./routes/api/transactions');
 
 app.use('/api', transactions);

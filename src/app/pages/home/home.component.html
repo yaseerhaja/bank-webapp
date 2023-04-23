@@ -2,11 +2,22 @@
 
 <div class="flex-container">
   <div class="flex-item flex-item-calendar">
-    <mat-slide-toggle>Toggle me!</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="isRangeSelected"
+      >Range Seletion</mat-slide-toggle
+    >
     <mat-card class="flex-item-calendar__card">
-      <mat-calendar [(selected)]="selected"></mat-calendar>
+      <ng-container *ngIf="!isRangeSelected; else rangeSelector">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+      </ng-container>
+
+      <ng-template #rangeSelector="">
+        <mat-calendar
+          [selected]="selectedRangeValue"
+          (selectedChange)="selectedChange($event)"
+        >
+        </mat-calendar>
+      </ng-template>
     </mat-card>
-    <p>Selected date: {{ selected }}</p>
   </div>
   <div class="flex-item flex-item__transaction">
     <ng-container
@@ -25,10 +36,31 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-container *ngFor="let item of days.transactions">
-            <mat-card *ngIf="item.otherParty">
+            <mat-card
+              mat-ripple
+              (click)="showDetailedPage($event, item)"
+              class="bk-web-card"
+            >
               <mat-card-header>
                 <mat-card-title>
-                  {{ item.otherParty.name }}
+                  <div>
+                    {{ item?.otherParty?.name ? item.otherParty.name : "N/A" }}
+                  </div>
+                  <div>
+                    {{
+                      (item.currencyCode === "EUR"
+                        ? item.amount
+                        : item.amount * item.currencyRate
+                      ) | currency : "EUR"
+                    }}
+                  </div>
+                  <div>
+                    <mat-chip
+                      [ngClass]="{ 'credited-chip': item.amount > 0 }"
+                      color="#000"
+                      >{{ item.amount > 0 ? "Credited" : "Debited" }}</mat-chip
+                    >
+                  </div>
                 </mat-card-title>
               </mat-card-header>
             </mat-card>

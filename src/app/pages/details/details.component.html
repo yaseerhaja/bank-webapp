@@ -1,1 +1,58 @@
-<p>details works!</p>
+<a
+  class="bk-web-breadcrumb"
+  [routerLink]="['/home']"
+  routerLinkActive="router-link-active"
+>
+  <mat-icon
+    aria-hidden="false"
+    aria-label="home icon"
+    fontIcon="home"
+  ></mat-icon>
+  Home
+</a>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Transactions Detail </mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="data; else error">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        [value]="data?.otherParty?.name ? data.otherParty.name : 'N/A'"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput [value]="data.description" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input
+        matInput
+        [value]="
+          (data.currencyCode === 'EUR'
+            ? data.amount
+            : data.amount * data.currencyRate
+          ) | currency : 'EUR'
+        "
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [value]="getDate(data.timestamp)" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Time</mat-label>
+      <input matInput [value]="getTime(data.timestamp)" readonly />
+    </mat-form-field>
+  </mat-card-content>
+  <ng-template #error> No Content Found </ng-template>
+</mat-card>
