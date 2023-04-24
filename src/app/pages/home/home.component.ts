@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
   modeType: string[] = ['All', 'Range'];
 
   public transactionDetails$: Observable<any> | undefined;
-  public isRangeSelected = false;
+
   private unsubscribe$ = new Subject();
 
   constructor(private homeService: HomeService, private router: Router) {}
@@ -74,25 +74,24 @@ export class HomeComponent implements OnInit {
 
   public getTransaction(formData: DateRangeType) {
     this.transactionDetails$ = undefined;
-    setTimeout(() => {
-      this.transactionDetails$ = this.homeService
-        .getTransactionDetails(formData)
-        .pipe(
-          tap((data) => {
-            data?.days.map((element: { transactions: any[] }) => {
-              return element.transactions.sort(this.compareTime);
-            });
-            return data?.days.sort(this.compareDate);
-          }),
-          map((data) => {
-            if (data?.days.length) {
-              return data;
-            }
-            return { days: [] };
-          }),
-          takeUntil(this.unsubscribe$)
-        );
-    }, 1000);
+
+    this.transactionDetails$ = this.homeService
+      .getTransactionDetails(formData)
+      .pipe(
+        tap((data) => {
+          data?.days.map((element: { transactions: any[] }) => {
+            return element.transactions.sort(this.compareTime);
+          });
+          return data?.days.sort(this.compareDate);
+        }),
+        map((data) => {
+          if (data?.days.length) {
+            return data;
+          }
+          return { days: [] };
+        }),
+        takeUntil(this.unsubscribe$)
+      );
   }
 
   public showDetailedPage(event: any, data: any): void {

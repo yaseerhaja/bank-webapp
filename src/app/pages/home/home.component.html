@@ -17,6 +17,7 @@
 
     <mat-card *ngIf="selectedMode === 'Range'" class="flex-item-calendar__card">
       <mat-calendar
+        class="bk-web-calendar"
         activeDate
         [selected]="selectedRangeValue"
         (selectedChange)="selectedChange($event)"
