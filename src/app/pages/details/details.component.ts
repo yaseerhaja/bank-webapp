@@ -25,7 +25,6 @@ export class DetailsComponent implements OnInit {
   constructor(private location: Location) {}
 
   ngOnInit() {
-    console.log(this.location.getState());
     this.data = this.location.getState();
   }
 
