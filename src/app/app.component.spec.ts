@@ -1,16 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
       ],
-      declarations: [
-        AppComponent
-      ],
+      providers: [MatDatepickerModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
@@ -20,16 +29,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bank-webapp'`, () => {
+  it(`should have as title 'Bank Webapp'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('bank-webapp');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('bank-webapp app is running!');
+    expect(app.title).toEqual('Bank Webapp');
   });
 });
