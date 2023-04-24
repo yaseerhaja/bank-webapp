@@ -5,10 +5,16 @@ const request = require('request');
 
 const CURRENCY_API = process.env.CURRENCY_API;
 const API_KEY = process.env.API_KEY;
+const transactions = require('../../transactions.json');
+const { idText } = require('typescript');
 
 router.post('/transactions', (req, res) => {
   logger.log('info', '%s', req.originalUrl);
 
+  const start = req.body.startDate;
+  const end = req.body.endDate;
+
+  // Free Api to get Currency details - Max 5000 hits per day
   //const uri = `https://${CURRENCY_API}/v1/latest?apikey=${API_KEY}`;
   // request.get(uri,
   //   {},
@@ -23,6 +29,25 @@ router.post('/transactions', (req, res) => {
   //         .json({ ...require('../../transactions.json'), ...JSON.parse(response.body)});
   //     }
   //   });
+ 
+  let filterData =[]
+  const isBetween = (date, min, max) => (date.getTime() >= min.getTime() && date.getTime() <= max.getTime());
+  const isSameDay = (date, start) =>{
+    return date.getTime() === start.getTime()
+  };
+  transactions.days.forEach(item=>{
+    if(start !== '' &&  end !=='') {
+      if(isBetween(new Date(item.id), new Date(start), new Date(end))){
+        filterData.push(item)
+      }
+    } else if(start !== ''){
+      if(isSameDay(new Date(item.id), new Date(start))){
+        filterData.push(item)
+      }
+    } else {
+      filterData = transactions.days
+    }
+  })
 
   const currencyData = {
     data: {
@@ -61,7 +86,7 @@ router.post('/transactions', (req, res) => {
       ZAR: 18.085764
     }
   };
-  res.send({...require('../../transactions.json'), ...currencyData});
+  res.send({...{days: filterData}, ...currencyData});
   
 });
 

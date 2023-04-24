@@ -2,27 +2,38 @@
 
 <div class="flex-container">
   <div class="flex-item flex-item-calendar">
-    <mat-slide-toggle [(ngModel)]="isRangeSelected"
-      >Range Seletion</mat-slide-toggle
-    >
-    <mat-card class="flex-item-calendar__card">
-      <ng-container *ngIf="!isRangeSelected; else rangeSelector">
-        <mat-calendar [(selected)]="selected"></mat-calendar>
-      </ng-container>
-
-      <ng-template #rangeSelector="">
-        <mat-calendar
-          [selected]="selectedRangeValue"
-          (selectedChange)="selectedChange($event)"
+    <div class="bk-web-transaction-type">
+      <label>Transaction Type</label>
+      <mat-radio-group aria-label="Select an mode" [(ngModel)]="selectedMode">
+        <mat-radio-button
+          *ngFor="let type of modeType"
+          (change)="radioChange($event)"
+          [value]="type"
+          value="all"
+          >{{ type }}</mat-radio-button
         >
-        </mat-calendar>
-      </ng-template>
+      </mat-radio-group>
+    </div>
+
+    <mat-card *ngIf="selectedMode === 'Range'" class="flex-item-calendar__card">
+      <mat-calendar
+        activeDate
+        [selected]="selectedRangeValue"
+        (selectedChange)="selectedChange($event)"
+      >
+      </mat-calendar>
     </mat-card>
   </div>
   <div class="flex-item flex-item__transaction">
     <ng-container
       *ngIf="transactionDetails$ | async as transactionDetails; else loader"
     >
+      <mat-card
+        class="bk-web-no-data"
+        *ngIf="transactionDetails.days.length === 0"
+      >
+        No Data available
+      </mat-card>
       <mat-accordion
         *ngFor="let days of transactionDetails.days"
         class="bk-web-accordion"

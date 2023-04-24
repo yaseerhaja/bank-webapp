@@ -1,10 +1,8 @@
 import {
   Component,
-  EventEmitter,
   HostBinding,
   Input,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,7 +10,6 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DateRange, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HomeService } from './home.service';
 import { DateRangeType } from './home.interface';
 import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
@@ -23,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAccordion } from '@angular/material/expansion';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { Router } from '@angular/router';
 
@@ -34,7 +32,6 @@ import { Router } from '@angular/router';
     NgxSkeletonLoaderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSlideToggleModule,
     MatCardModule,
     FormsModule,
     HttpClientModule,
@@ -44,6 +41,7 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatInputModule,
     MatChipsModule,
+    MatRadioModule,
   ],
   providers: [MatDatepickerModule, HomeService],
   templateUrl: './home.component.html',
@@ -56,6 +54,9 @@ export class HomeComponent implements OnInit {
 
   selected: Date | null = null;
 
+  selectedMode: string | undefined = 'All';
+  modeType: string[] = ['All', 'Range'];
+
   public transactionDetails$: Observable<any> | undefined;
   public isRangeSelected = false;
   private unsubscribe$ = new Subject();
@@ -64,7 +65,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     const formData: DateRangeType = {
-      stardDate: '',
+      startDate: '',
       endDate: '',
     };
 
@@ -72,27 +73,29 @@ export class HomeComponent implements OnInit {
   }
 
   public getTransaction(formData: DateRangeType) {
-    this.transactionDetails$ = this.homeService
-      .getTransactionDetails(formData)
-      .pipe(
-        tap((data) => {
-          data?.days.map((element: { transactions: any[] }) => {
-            return element.transactions.sort(this.compareTime);
-          });
-          return data?.days.sort(this.compareDate);
-        }),
-        map((data) => {
-          if (data?.days.length) {
-            console.log(data);
-            return data;
-          }
-        }),
-        takeUntil(this.unsubscribe$)
-      );
+    this.transactionDetails$ = undefined;
+    setTimeout(() => {
+      this.transactionDetails$ = this.homeService
+        .getTransactionDetails(formData)
+        .pipe(
+          tap((data) => {
+            data?.days.map((element: { transactions: any[] }) => {
+              return element.transactions.sort(this.compareTime);
+            });
+            return data?.days.sort(this.compareDate);
+          }),
+          map((data) => {
+            if (data?.days.length) {
+              return data;
+            }
+            return { days: [] };
+          }),
+          takeUntil(this.unsubscribe$)
+        );
+    }, 1000);
   }
 
   public showDetailedPage(event: any, data: any): void {
-    console.log(data);
     this.router.navigateByUrl('/details', { state: data });
   }
 
@@ -108,7 +111,38 @@ export class HomeComponent implements OnInit {
         this.selectedRangeValue = new DateRange<Date>(start, end);
       }
     }
-    console.log(this.selectedRangeValue);
+
+    this.getTransaction({
+      startDate: this.getDate(this.selectedRangeValue.start),
+      endDate: this.getDate(this.selectedRangeValue.end),
+    });
+  }
+
+  public radioChange(event: any): void {
+    if (event.value === 'All') {
+      this.getTransaction({
+        startDate: '',
+        endDate: '',
+      });
+    }
+  }
+
+  public getDate(dt: any): string {
+    if (!dt) {
+      return '';
+    }
+    var dateObj = new Date(dt);
+    var month = dateObj.getMonth() + 1; //months from 1-12
+    var day = dateObj.getDate();
+    var year = dateObj.getFullYear();
+
+    return (
+      year +
+      '-' +
+      (month < 10 ? '0' + month : month) +
+      '-' +
+      (day < 10 ? '0' + day : day)
+    );
   }
 
   private compareDate(a: any, b: any): number {
