@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   color: #fff;
-  margin-bottom: 8px;
+  margin-bottom: 32px;
 
   mat-icon {
     margin-right: 8px;
@@ -27,5 +27,96 @@ mat-card-content {
   mat-card-content {
     margin: 12px;
     flex-flow: column wrap;
+  }
+}
+
+.bw-web-card-details {
+  width: 300px;
+  height: 400px;
+
+  mat-card-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+
+    & > div {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      flex-flow: column;
+    }
+
+    mat-icon {
+      transform: scale(2);
+    }
+  }
+
+  mat-card-content {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 14px;
+  }
+
+  .flex-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+
+    .flex-item {
+      width: 50%;
+      padding-top: 16px;
+
+      label {
+        color: #725c5c;
+        margin: 10px;
+      }
+
+      span {
+        display: block;
+        margin: 10px;
+      }
+      span.bk-web-amount {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .bk-web-debit-card {
+    margin: 16px;
+    background: #aad5bc;
+    height: 73px;
+    border-radius: 4px;
+    box-shadow: 2px 1px 2px #ddd;
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    align-items: center;
+
+    & > div:first-child {
+      width: 30%;
+      background: url("/assets/card.png");
+      height: 50px;
+      background-size: contain;
+      margin-left: 10px;
+    }
+
+    & > div:nth-child(2) {
+      display: flex;
+      justify-content: flex-start;
+      flex-flow: column wrap;
+      gap: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .mat-mdc-standard-chip.credited-chip {
+    background-color: #03ad03;
+  }
+
+  .mat-mdc-standard-chip {
+    background-color: #ff0000;
   }
 }

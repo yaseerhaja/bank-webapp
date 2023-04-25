@@ -3,8 +3,7 @@ import { CommonModule, Location } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-details',
@@ -14,8 +13,7 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     RouterModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
+    MatChipsModule,
   ],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],

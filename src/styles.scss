@@ -175,6 +175,13 @@ table {
   }
 }
 
+.mat-mdc-card-content {
+  .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled)
+    .mdc-evolution-chip__text-label {
+    color: #fff;
+  }
+}
+
 mat-slide-toggle {
   margin: 20px;
 

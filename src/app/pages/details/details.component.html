@@ -11,48 +11,62 @@
   Home
 </a>
 
-<mat-card>
+<mat-card class="bw-web-card-details">
   <mat-card-header>
-    <mat-card-title> Transactions Detail </mat-card-title>
+    <div mat-card-avatar class="example-header-image">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="money icon"
+        scale="2"
+        fontIcon="attach_money"
+      ></mat-icon>
+    </div>
+    <mat-card-title>{{
+      data?.otherParty?.name ? data.otherParty.name : "N/A"
+    }}</mat-card-title>
+    <mat-card-subtitle>{{ data?.description }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content *ngIf="data; else error">
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input
-        matInput
-        [value]="data?.otherParty?.name ? data.otherParty.name : 'N/A'"
-        readonly
-      />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <input matInput [value]="data.description" readonly />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Amount</mat-label>
-      <input
-        matInput
-        [value]="
-          (data.currencyCode === 'EUR'
-            ? data.amount
-            : data.amount * data.currencyRate
-          ) | currency : 'EUR'
-        "
-        readonly
-      />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Date</mat-label>
-      <input matInput [value]="getDate(data.timestamp)" readonly />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Time</mat-label>
-      <input matInput [value]="getTime(data.timestamp)" readonly />
-    </mat-form-field>
+  <mat-card-content>
+    <div class="flex-container">
+      <div class="flex-item">
+        <label>AMOUNT</label>
+        <span class="bk-web-amount">{{
+          (data?.currencyCode === "EUR"
+            ? data?.amount
+            : data?.amount * data?.currencyRate
+          ) | currency : "EUR"
+        }}</span>
+      </div>
+      <div class="flex-item">
+        <label>DATE / TIME</label>
+        <span>{{ getDate(data?.timestamp) }}</span>
+        <span>{{ getTime(data?.timestamp) }}</span>
+      </div>
+      <div class="flex-item">
+        <label>STATUS</label>
+        <span>Done</span>
+      </div>
+      <div class="flex-item">
+        <mat-chip
+          [ngClass]="{ 'credited-chip': data?.amount > 0 }"
+          color="#000"
+          >{{ data?.amount > 0 ? "Credited" : "Debited" }}</mat-chip
+        >
+      </div>
+    </div>
   </mat-card-content>
-  <ng-template #error> No Content Found </ng-template>
+  <div class="bk-web-debit-card">
+    <div class="flex-item"></div>
+    <div class="flex-item">
+      <label>via Card</label>
+      <span
+        >Ending with **{{
+          data?.otherParty?.iban.substring(
+            data?.otherParty?.iban.length - 2,
+            data?.otherParty?.iban.length
+          )
+        }}</span
+      >
+    </div>
+  </div>
 </mat-card>
